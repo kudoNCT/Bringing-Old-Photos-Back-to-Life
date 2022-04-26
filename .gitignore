@@ -1,0 +1,11 @@
+.idea
+__pycache__
+.DS_Store
+
+
+checkpoints/*
+Face_Detection/shape_predictor_68_face_landmarks.dat
+Face_Enhancement/checkpoints/*
+Face_Enhancement/face_checkpoints.zip
+Global/checkpoints/*
+Global/global.zip
