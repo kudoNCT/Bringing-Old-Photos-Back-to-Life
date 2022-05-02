@@ -136,7 +136,7 @@ if __name__ == "__main__":
     stage_3_output_dir = os.path.join(opts.output_folder, "stage_3_face_output")
     if not os.path.exists(stage_3_output_dir):
         os.makedirs(stage_3_output_dir)
-    
+
     if opts.HR:
         opts.checkpoint_name='FaceSR_512'
         stage_3_command = (
@@ -151,7 +151,7 @@ if __name__ == "__main__":
             + " --load_size 512 --label_nc 18 --no_instance --preprocess_mode resize --batchSize 1 --results_dir "
             + stage_3_output_dir
             + " --no_parsing_map"
-        ) 
+        )
     else:
         stage_3_command = (
             "python test_face.py --old_face_folder "

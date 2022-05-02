@@ -7,6 +7,7 @@ from torch.autograd import Variable
 from options.test_options import TestOptions
 from models.models import create_model
 from models.mapping_model import Pix2PixHDModel_Mapping
+from models.pix2pixHD_model import InferenceModel
 import util.util as util
 from PIL import Image
 import torch
@@ -98,10 +99,9 @@ if __name__ == "__main__":
     opt = TestOptions().parse(save=False)
     parameter_set(opt)
 
-    model = Pix2PixHDModel_Mapping()
+    model = InferenceModel()
 
     model.initialize(opt)
-    model.eval()
 
     if not os.path.exists(opt.outputs_dir + "/" + "input_image"):
         os.makedirs(opt.outputs_dir + "/" + "input_image")
@@ -167,7 +167,7 @@ if __name__ == "__main__":
 
         try:
             with torch.no_grad():
-                generated = model.inference(input, mask)
+                generated = model.inference((input, mask))
         except Exception as ex:
             print("Skip %s due to an error:\n%s" % (input_name, str(ex)))
             continue
