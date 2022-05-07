@@ -271,6 +271,7 @@ class PairOldPhotos(BaseDataset):
         self.dir_AB = opt.dataroot
         if opt.isTrain:
             self.load_img_dir_clean = os.path.join(self.dir_AB, "VOC")
+            print('data root : ', self.load_img_dir_clean)
             self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
 
             print("-------------Filter the imgs whose size <256 in VOC-------------")
@@ -282,8 +283,8 @@ class PairOldPhotos(BaseDataset):
             #         continue
             #     self.filtered_imgs_clean.append((img_name, img))
 
-            print("--------Origin image num is [%d], filtered result is [%d]--------" % (
-                len(self.filtered_imgs_clean), len(self.filtered_imgs_clean)))
+            # print("--------Origin image num is [%d], filtered result is [%d]--------" % (
+            #     len(self.filtered_imgs_clean), len(self.filtered_imgs_clean)))
 
         else:
             self.load_img_dir = os.path.join(self.dir_AB, opt.test_dataset)
