@@ -352,8 +352,8 @@ class Pix2PixHDModel_Mapping(BaseModel):
         self.save_optimizer(self.optimizer_mapping, "optimizer_mapping", which_epoch)
         self.save_optimizer(self.optimizer_D, "D", which_epoch)
 
-        if self.gen_features:
-            self.save_network(self.netE, 'E', which_epoch, self.gpu_ids)
+        # if self.gen_features:
+        #     self.save_network(self.netE, 'E', which_epoch, self.gpu_ids)
 
 
 class InferenceModel(Pix2PixHDModel_Mapping):
