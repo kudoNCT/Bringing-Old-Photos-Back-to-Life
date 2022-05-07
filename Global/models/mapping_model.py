@@ -345,6 +345,16 @@ class Pix2PixHDModel_Mapping(BaseModel):
         fake_image = self.netG_B.forward(label_feat_map, flow="dec")
         return fake_image
 
+    def save(self, which_epoch):
+        self.save_network(self.mapping_net, 'mapping_net', which_epoch, self.gpu_ids)
+        self.save_network(self.netD, 'D', which_epoch, self.gpu_ids)
+
+        self.save_optimizer(self.optimizer_mapping, "optimizer_mapping", which_epoch)
+        self.save_optimizer(self.optimizer_D, "D", which_epoch)
+
+        if self.gen_features:
+            self.save_network(self.netE, 'E', which_epoch, self.gpu_ids)
+
 
 class InferenceModel(Pix2PixHDModel_Mapping):
     def forward(self, label, inst):
