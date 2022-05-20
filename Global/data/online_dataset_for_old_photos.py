@@ -178,20 +178,13 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
         self.isImage = 'domainA' in opt.name
         self.task = 'old_photo_restoration_training_vae'
         self.dir_AB = opt.dataroot
-        # if self.isImage:
+        # self.load_img_dir_L_old = os.path.join(self.dir_AB, "Real_L_old")
+        # self.load_img_dir_RGB_old = os.path.join(self.dir_AB, "Real_RGB_old")
+        # self.load_img_dir_clean = os.path.join(self.dir_AB, "VOC")
         #
-        #     self.load_img_dir_L_old = os.path.join(self.dir_AB, "Real_L_old")
-        #     self.load_img_dir_RGB_old = os.path.join(self.dir_AB, "Real_RGB_old")
-        #     self.load_img_dir_clean = os.path.join(self.dir_AB, "VOC")
-        #
-        #     self.loaded_imgs_L_old = BigFileMemoryLoader(self.load_img_dir_L_old)
-        #     self.loaded_imgs_RGB_old = BigFileMemoryLoader(self.load_img_dir_RGB_old)
-        #     self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
-        #
-        # else:
-        #     self.load_img_dir_clean = os.path.join(self.dir_AB, "VOC")
-        #     self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
-
+        # self.loaded_imgs_L_old = BigFileMemoryLoader(self.load_img_dir_L_old)
+        # self.loaded_imgs_RGB_old = BigFileMemoryLoader(self.load_img_dir_RGB_old)
+        # self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
         self.load_img_dir_clean = os.path.join(self.dir_AB, "train_images")
         self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
 
