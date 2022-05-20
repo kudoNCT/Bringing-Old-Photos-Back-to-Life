@@ -23,7 +23,9 @@ class BigFileMemoryLoader(object):
 
     def __getitem__(self, index):
         try:
-            img = Image.open(self._images[index]).convert('RGB')
+            # img = Image.open(self._images[index]).convert('RGB')
+            img = Image.open(self._images[index]).convert('L')
+
             img_name = self._images[index].split('/')[-1]
             return img_name, img
         except Exception:

@@ -131,24 +131,26 @@ def blur_image_v2(img):
 
 
 def online_add_degradation_v2(img):
-    task_id = np.random.permutation(4)
+    # task_id = np.random.permutation(4)
+    #
+    # for x in task_id:
+    #     if x == 0 and random.uniform(0, 1) < 0.7:
+    #         img = blur_image_v2(img)
+    #     if x == 1 and random.uniform(0, 1) < 0.7:
+    #         flag = random.choice([1, 2, 3])
+    #         if flag == 1:
+    #             img = synthesize_gaussian(img, 5, 50)
+    #         if flag == 2:
+    #             img = synthesize_speckle(img, 5, 50)
+    #         if flag == 3:
+    #             img = synthesize_salt_pepper(img, random.uniform(0, 0.01), random.uniform(0.3, 0.8))
+    #     if x == 2 and random.uniform(0, 1) < 0.7:
+    #         img = synthesize_low_resolution(img)
+    #
+    #     if x == 3 and random.uniform(0, 1) < 0.7:
+    #         img = convertToJpeg(img, random.randint(40, 100))
 
-    for x in task_id:
-        if x == 0 and random.uniform(0, 1) < 0.7:
-            img = blur_image_v2(img)
-        if x == 1 and random.uniform(0, 1) < 0.7:
-            flag = random.choice([1, 2, 3])
-            if flag == 1:
-                img = synthesize_gaussian(img, 5, 50)
-            if flag == 2:
-                img = synthesize_speckle(img, 5, 50)
-            if flag == 3:
-                img = synthesize_salt_pepper(img, random.uniform(0, 0.01), random.uniform(0.3, 0.8))
-        if x == 2 and random.uniform(0, 1) < 0.7:
-            img = synthesize_low_resolution(img)
-
-        if x == 3 and random.uniform(0, 1) < 0.7:
-            img = convertToJpeg(img, random.randint(40, 100))
+    img = synthesize_gaussian(img, 10, 30)
 
     return img
 
@@ -176,19 +178,22 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
         self.isImage = 'domainA' in opt.name
         self.task = 'old_photo_restoration_training_vae'
         self.dir_AB = opt.dataroot
-        if self.isImage:
+        # if self.isImage:
+        #
+        #     self.load_img_dir_L_old = os.path.join(self.dir_AB, "Real_L_old")
+        #     self.load_img_dir_RGB_old = os.path.join(self.dir_AB, "Real_RGB_old")
+        #     self.load_img_dir_clean = os.path.join(self.dir_AB, "VOC")
+        #
+        #     self.loaded_imgs_L_old = BigFileMemoryLoader(self.load_img_dir_L_old)
+        #     self.loaded_imgs_RGB_old = BigFileMemoryLoader(self.load_img_dir_RGB_old)
+        #     self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
+        #
+        # else:
+        #     self.load_img_dir_clean = os.path.join(self.dir_AB, "VOC")
+        #     self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
 
-            self.load_img_dir_L_old = os.path.join(self.dir_AB, "Real_L_old")
-            self.load_img_dir_RGB_old = os.path.join(self.dir_AB, "Real_RGB_old")
-            self.load_img_dir_clean = os.path.join(self.dir_AB, "VOC")
-
-            self.loaded_imgs_L_old = BigFileMemoryLoader(self.load_img_dir_L_old)
-            self.loaded_imgs_RGB_old = BigFileMemoryLoader(self.load_img_dir_RGB_old)
-            self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
-
-        else:
-            self.load_img_dir_clean = os.path.join(self.dir_AB, "VOC")
-            self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
+        self.load_img_dir_clean = os.path.join(self.dir_AB, "train_images")
+        self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
 
         self.pid = os.getpid()
 
@@ -199,23 +204,27 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
         sampled_dataset = None
         degradation = None
         if self.isImage:  ## domain A , contains 2 kinds of data: synthetic + real_old
-            P = random.uniform(0, 2)
-            if P >= 0 and P < 1:
-                if random.uniform(0, 1) < 0.5:
-                    sampled_dataset = self.loaded_imgs_L_old
-                    self.load_img_dir = self.load_img_dir_L_old
-                else:
-                    sampled_dataset = self.loaded_imgs_RGB_old
-                    self.load_img_dir = self.load_img_dir_RGB_old
-                is_real_old = 1
-            if P >= 1 and P < 2:
-                sampled_dataset = self.filtered_imgs_clean
-                self.load_img_dir = self.load_img_dir_clean
-                degradation = 1
+            # P = random.uniform(0, 2)
+            # if P >= 0 and P < 1:
+            #     if random.uniform(0, 1) < 0.5:
+            #         sampled_dataset = self.loaded_imgs_L_old
+            #         self.load_img_dir = self.load_img_dir_L_old
+            #     else:
+            #         sampled_dataset = self.loaded_imgs_RGB_old
+            #         self.load_img_dir = self.load_img_dir_RGB_old
+            #     is_real_old = 1
+            # if P >= 1 and P < 2:
+            #     sampled_dataset = self.filtered_imgs_clean
+            #     self.load_img_dir = self.load_img_dir_clean
+            #     degradation = 1
+            sampled_dataset = self.filtered_imgs_clean
+            self.load_img_dir = self.load_img_dir_clean
+            degradation = 1
         else:
 
             sampled_dataset = self.filtered_imgs_clean
             self.load_img_dir = self.load_img_dir_clean
+
 
         sampled_dataset_len = len(sampled_dataset)
 
@@ -233,9 +242,9 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
 
         # apply the same transform to both A and B
 
-        if random.uniform(0, 1) < 0.1:
-            img = img.convert("L")
-            img = img.convert("RGB")
+        # if random.uniform(0, 1) < 0.1:
+        #     img = img.convert("L")
+        #     img = img.convert("RGB")
             ## Give a probability P, we convert the RGB image into L
 
         A = img
@@ -250,10 +259,8 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
         B_tensor = inst_tensor = feat_tensor = 0
         A_tensor = A_transform(A)
 
-        input_dict = {'label': A_tensor, 'inst': is_real_old, 'image': A_tensor,
-                      'feat': feat_tensor, 'path': path}
         # print('got sample data!!!', len(A_tensor))
-        return input_dict
+        return {'label': A_tensor, 'inst': is_real_old, 'image': A_tensor, 'feat': feat_tensor, 'path': path}
 
     def __len__(self):
         return len(
@@ -270,7 +277,7 @@ class PairOldPhotos(BaseDataset):
         self.task = 'old_photo_restoration_training_mapping'
         self.dir_AB = opt.dataroot
         if opt.isTrain:
-            self.load_img_dir_clean = os.path.join(self.dir_AB, "VOC")
+            self.load_img_dir_clean = os.path.join(self.dir_AB, "train_images")
             print('data root : ', self.load_img_dir_clean)
             self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
 
@@ -313,11 +320,11 @@ class PairOldPhotos(BaseDataset):
                 img_name_B, B = self.loaded_imgs[index]
                 path = os.path.join(self.load_img_dir, img_name_A)
 
-        if random.uniform(0, 1) < 0.1 and self.opt.isTrain:
-            A = A.convert("L")
-            B = B.convert("L")
-            A = A.convert("RGB")
-            B = B.convert("RGB")
+        # if random.uniform(0, 1) < 0.1 and self.opt.isTrain:
+        #     A = A.convert("L")
+        #     B = B.convert("L")
+        #     A = A.convert("RGB")
+        #     B = B.convert("RGB")
         ## In P, we convert the RGB into L
 
         ##test on L
