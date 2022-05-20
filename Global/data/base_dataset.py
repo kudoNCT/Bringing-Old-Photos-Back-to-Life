@@ -101,7 +101,7 @@ def __scale_width(img, target_width, method=Image.BICUBIC):
     return img.resize((w, h), method)
 
 def __crop(img, pos, size):
-    ow, oh = img.size
+    ow, oh, _ = img.shape
     x1, y1 = pos
     tw = th = size
     if (ow > tw or oh > th):        
