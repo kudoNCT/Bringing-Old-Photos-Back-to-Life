@@ -249,8 +249,8 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
 
         A = img
         w, h = A.size
-        if w < 256 or h < 256:
-            A = transforms.Resize(256, Image.BICUBIC)(A)
+        # if w < 256 or h < 256:
+        #     A = transforms.Resize(256, Image.BICUBIC)(A)
         ## Since we want to only crop the images (256*256), for those old photos whose size is smaller than 256, we first resize them.
 
         transform_params = get_params(self.opt, A.size)
