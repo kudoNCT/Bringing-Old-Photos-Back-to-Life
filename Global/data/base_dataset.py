@@ -78,11 +78,12 @@ def get_transform(opt, params, method=Image.BICUBIC, normalize=True):
     transform_list += [transforms.ToTensor()]
 
     if normalize:
-        transform_list += [transforms.Normalize((0.5), (0.5))]
+        transform_list += [transforms.Normalize((0.5, 0.5, 0.5),
+                                                (0.5, 0.5, 0.5))]
     return transforms.Compose(transform_list)
 
 def normalize():    
-    return transforms.Normalize((0.5), (0.5))
+    return transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 
 def __make_power_2(img, base, method=Image.BICUBIC):
     ow, oh = img.size        
@@ -101,7 +102,7 @@ def __scale_width(img, target_width, method=Image.BICUBIC):
     return img.resize((w, h), method)
 
 def __crop(img, pos, size):
-    ow, oh, _ = img.shape
+    ow, oh = img.size
     x1, y1 = pos
     tw = th = size
     if (ow > tw or oh > th):        
