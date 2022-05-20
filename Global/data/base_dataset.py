@@ -83,7 +83,7 @@ def get_transform(opt, params, method=Image.BICUBIC, normalize=True):
     return transforms.Compose(transform_list)
 
 def normalize():    
-    return transforms.Normalize((0.5), (0.5))
+    return transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 
 def __make_power_2(img, base, method=Image.BICUBIC):
     ow, oh = img.size        
