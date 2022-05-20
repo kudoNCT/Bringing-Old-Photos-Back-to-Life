@@ -247,7 +247,7 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
         #     img = img.convert("RGB")
             ## Give a probability P, we convert the RGB image into L
 
-        A = img
+        A = np.stack((img, ) * 3, axis=-1)
         w, h = A.size
         if w < 256 or h < 256:
             A = transforms.Resize(256, Image.BICUBIC)(A)
