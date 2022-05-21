@@ -74,7 +74,7 @@ for epoch in range(start_epoch, opt.niter + opt.niter_decay + 1):
             Variable(data['image']), Variable(data['feat']), infer=save_fake)
 
         # sum per device losses
-        losses = [ torch.mean(x) if not isinstance(x, int) else x for x in losses ]
+        losses = [x if isinstance(x, int) else torch.mean(x) for x in losses]
         loss_dict = dict(zip(model.loss_names, losses))
 
 
@@ -94,7 +94,7 @@ for epoch in range(start_epoch, opt.niter + opt.niter_decay + 1):
         loss_D.backward()
         model.optimizer_D.step()
 
-        #call(["nvidia-smi", "--format=csv", "--query-gpu=memory.used,memory.free"]) 
+        #call(["nvidia-smi", "--format=csv", "--query-gpu=memory.used,memory.free"])
 
         ############## Display results and errors ##########
         ### print out errors
@@ -122,7 +122,7 @@ for epoch in range(start_epoch, opt.niter + opt.niter_decay + 1):
 
         if epoch_iter >= dataset_size:
             break
-       
+
     # end of epoch 
     iter_end_time = time.time()
     print('End of epoch %d / %d \t Time Taken: %d sec' %

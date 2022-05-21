@@ -5,7 +5,7 @@ import time
 from collections import OrderedDict
 from options.train_options import TrainOptions
 from data.data_loader import CreateDataLoader
-from models.models import create_da_model
+from models.models import create_da_model, create_model
 import util.util as util
 from util.visualizer import Visualizer
 import os
@@ -42,7 +42,8 @@ else:
     start_epoch, epoch_iter = 1, 0
 
 # opt.which_epoch=start_epoch-1
-model = create_da_model(opt)
+# model = create_da_model(opt)
+model = create_model(opt)
 fd = open(path, 'w')
 fd.write(str(model.netG))
 fd.write(str(model.netD))
@@ -76,10 +77,14 @@ for epoch in range(start_epoch, opt.niter + opt.niter_decay + 1):
         loss_dict = dict(zip(model.loss_names, losses))
 
         # calculate final loss scalar
+        # loss_D = (loss_dict['D_fake'] + loss_dict['D_real']) * 0.5
+        # loss_featD = (loss_dict['featD_fake'] + loss_dict['featD_real']) * 0.5
+        # loss_G = loss_dict['G_GAN'] + loss_dict.get('G_GAN_Feat', 0) + loss_dict.get('G_VGG', 0) + loss_dict['G_KL'] + \
+        #          loss_dict['G_featD']
+
         loss_D = (loss_dict['D_fake'] + loss_dict['D_real']) * 0.5
-        loss_featD = (loss_dict['featD_fake'] + loss_dict['featD_real']) * 0.5
-        loss_G = loss_dict['G_GAN'] + loss_dict.get('G_GAN_Feat', 0) + loss_dict.get('G_VGG', 0) + loss_dict['G_KL'] + \
-                 loss_dict['G_featD']
+        loss_G = loss_dict['G_GAN'] + loss_dict.get('G_GAN_Feat', 0) + loss_dict.get('G_VGG', 0) + loss_dict[
+            'G_KL'] + loss_dict.get('Smooth_L1', 0) * opt.L1_weight
 
         ############### Backward Pass ####################
         # update generator weights
@@ -95,9 +100,9 @@ for epoch in range(start_epoch, opt.niter + opt.niter_decay + 1):
         loss_D.backward()
         model.optimizer_D.step()
 
-        model.optimizer_featD.zero_grad()
-        loss_featD.backward()
-        model.optimizer_featD.step()
+        # model.optimizer_featD.zero_grad()
+        # loss_featD.backward()
+        # model.optimizer_featD.step()
 
         # call(["nvidia-smi", "--format=csv", "--query-gpu=memory.used,memory.free"])
 
