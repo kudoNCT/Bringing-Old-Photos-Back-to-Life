@@ -27,7 +27,7 @@ class BigFileMemoryLoader(object):
             # img = Image.open(self._images[index]).convert('L')
 
             img_name = self._images[index].split('/')[-1]
-            print('[Get img] ', img_name)
+            # print('[Get img] ', img_name)
             return img_name, img
         except Exception:
             print('Image read error for index %d' % (index))
