@@ -11,8 +11,6 @@ Face_Enhancement/face_checkpoints.zip
 Global/checkpoints/*
 Global/global.zip
 m_outputdomainA_SR_old_photos/*
-ckpt_A/*
-ckpt_B/*
 ckpt_Mapping/*
 Face_Enhancement/*
 Face_Detection/*
