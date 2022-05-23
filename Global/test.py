@@ -70,7 +70,8 @@ def parameter_set(opt):
     opt.mapping_n_block = 6
     opt.map_mc = 512
     opt.no_instance = True
-    opt.checkpoints_dir = "./checkpoints/restoration"
+    # opt.checkpoints_dir = "./checkpoints/restoration"
+    opt.checkpoints_dir = "./checkpoints"
     ##
 
     if opt.Quality_restore:
