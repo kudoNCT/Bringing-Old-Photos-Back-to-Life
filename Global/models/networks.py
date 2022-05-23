@@ -55,8 +55,8 @@ def define_G(input_nc, output_nc, ngf, netG, k_size=3, n_downsample_global=3, n_
         # if opt.self_gen:
         if opt.use_v2:
             netG = GlobalGenerator_DCDCv2(input_nc, output_nc, ngf, k_size, n_downsample_global, norm_layer, opt=opt)
-        else:
-            netG = GlobalGenerator_v2(input_nc, output_nc, ngf, k_size, n_downsample_global, n_blocks_global, norm_layer, opt=opt)
+        # else:
+        #     netG = GlobalGenerator_v2(input_nc, output_nc, ngf, k_size, n_downsample_global, n_blocks_global, norm_layer, opt=opt)
     else:
         raise('generator not implemented!')
     print(netG)
