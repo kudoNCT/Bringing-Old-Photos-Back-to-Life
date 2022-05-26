@@ -5,6 +5,8 @@ __pycache__
 
 checkpoints/*
 checkpoint/*
+ckpt_A/*
+ckpt_B/*
 Face_Detection/shape_predictor_68_face_landmarks.dat
 Face_Enhancement/checkpoints/*
 Face_Enhancement/face_checkpoints.zip
