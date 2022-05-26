@@ -240,8 +240,8 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
         #     img = img.convert("RGB")
             ## Give a probability P, we convert the RGB image into L
 
-        img = img.convert("L")
-        img = img.convert("RGB")
+        # img = img.convert("L")
+        # img = img.convert("RGB")
 
         A = img
         w, h = A.size
