@@ -330,6 +330,12 @@ class PairOldPhotos(BaseDataset):
         # w2 = int(w / 2)
         # A = img.crop((0, 0, w2, h))
         # B = img.crop((w2, 0, w, h))
+
+        A = A.convert("L")
+        B = B.convert("L")
+        A = A.convert("RGB")
+        B = B.convert("RGB")
+
         w, h = A.size
         if w < 256 or h < 256:
             A = transforms.Scale(256, Image.BICUBIC)(A)
