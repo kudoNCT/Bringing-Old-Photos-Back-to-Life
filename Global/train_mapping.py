@@ -105,6 +105,8 @@ for epoch in range(start_epoch, opt.niter + opt.niter_decay + 1):
         # update discriminator weights
         model.optimizer_D.zero_grad()
         loss_D.backward()
+
+
         model.optimizer_D.step()
 
         ############## Display results and errors ##########

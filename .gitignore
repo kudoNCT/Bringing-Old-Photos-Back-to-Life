@@ -14,4 +14,6 @@ m_outputdomainA_SR_old_photos/*
 ckpt_Mapping/*
 Face_Enhancement/*
 Face_Detection/*
+ckpt_B/*
+ckpt_A/*
 
