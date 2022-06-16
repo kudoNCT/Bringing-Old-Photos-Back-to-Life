@@ -1,12 +1,9 @@
 .idea
 __pycache__
 .DS_Store
-
-
 checkpoints/*
-checkpoint/*
-Face_Detection/*
-Face_Enhancement/*
+Face_Detection/
+Face_Enhancement/
 Global/checkpoints/*
 Global/global.zip
 m_outputdomainA_SR_old_photos/*
