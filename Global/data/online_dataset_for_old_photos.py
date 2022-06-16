@@ -185,7 +185,7 @@ class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old
         # self.loaded_imgs_L_old = BigFileMemoryLoader(self.load_img_dir_L_old)
         # self.loaded_imgs_RGB_old = BigFileMemoryLoader(self.load_img_dir_RGB_old)
         # self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
-        self.load_img_dir_clean = os.path.join(self.dir_AB, "train_images")
+        self.load_img_dir_clean = os.path.join(self.dir_AB, "")
         self.filtered_imgs_clean = BigFileMemoryLoader(self.load_img_dir_clean)
 
         self.pid = os.getpid()
@@ -331,8 +331,8 @@ class PairOldPhotos(BaseDataset):
         # A = img.crop((0, 0, w2, h))
         # B = img.crop((w2, 0, w, h))
 
-        A = A.convert("L")
-        B = B.convert("L")
+        #A = A.convert("L")
+        #B = B.convert("L")
         A = A.convert("RGB")
         B = B.convert("RGB")
 
